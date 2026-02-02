@@ -68,11 +68,9 @@ function showStep(stepIndex) {
   stepData.options.forEach(opt => {
     const btn = document.createElement('button');
     btn.innerText = opt.text;
-    btn.onclick = () => {
-      messageBox.innerText = opt.nextMsg;
-      if(opt.correct) correctCount++;
 
-      if(opt.isResult){ // Show result on click
+    btn.onclick = () => {
+      if(opt.isResult){ // Show result directly
         optionsBox.innerHTML = '';
         if(correctCount === 3){
           container.style.backgroundColor = "#d4edda"; // light green
@@ -84,6 +82,10 @@ function showStep(stepIndex) {
         return; // stop further action
       }
 
+      // Normal option clicked
+      messageBox.innerText = opt.nextMsg;
+      if(opt.correct) correctCount++;
+
       if(opt.nextStep !== null){
         const nextBtn = document.createElement('button');
         nextBtn.innerText = "Aage badho";
@@ -94,6 +96,7 @@ function showStep(stepIndex) {
         optionsBox.appendChild(nextBtn);
       }
     };
+
     optionsBox.appendChild(btn);
   });
 }
