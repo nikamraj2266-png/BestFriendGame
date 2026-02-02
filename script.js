@@ -55,7 +55,7 @@ const gameSteps = [
   {
     message: "Result aayega...",
     options: [
-      { text: "Dekho result", nextMsg: "", nextStep: null }
+      { text: "Dekho result", nextMsg: "", nextStep: null, isResult: true }
     ]
   }
 ];
@@ -72,23 +72,23 @@ function showStep(stepIndex) {
       messageBox.innerText = opt.nextMsg;
       if(opt.correct) correctCount++;
 
+      if(opt.isResult){ // Show result on click
+        optionsBox.innerHTML = '';
+        if(correctCount === 3){
+          container.style.backgroundColor = "#d4edda"; // light green
+          messageBox.innerText = "Aap to bahut hoshiyaar ho Radhika ji 😅";
+        } else {
+          container.style.backgroundColor = "#f8d7da"; // light red
+          messageBox.innerText = "Better try next time Radhu 😅";
+        }
+        return; // stop further action
+      }
+
       if(opt.nextStep !== null){
         const nextBtn = document.createElement('button');
         nextBtn.innerText = "Aage badho";
         nextBtn.onclick = () => {
-          if(stepIndex === 5){ // final step
-            optionsBox.innerHTML = '';
-            // Result background & message
-            if(correctCount === 3){
-              container.style.backgroundColor = "#d4edda"; // light green
-              messageBox.innerText = "Aap to bahut hoshiyaar ho Radhika ji 😅";
-            } else {
-              container.style.backgroundColor = "#f8d7da"; // light red
-              messageBox.innerText = "Better try next time Radhu 😅";
-            }
-          } else {
-            showStep(opt.nextStep);
-          }
+          showStep(opt.nextStep);
         };
         optionsBox.innerHTML = '';
         optionsBox.appendChild(nextBtn);
@@ -98,5 +98,5 @@ function showStep(stepIndex) {
   });
 }
 
-// Start game
+// Start the game
 showStep(step);
