@@ -1,5 +1,6 @@
 const messageBox = document.getElementById('message-box');
 const optionsBox = document.getElementById('options');
+const container = document.querySelector('.container');
 
 let step = 0;
 let correctCount = 0;
@@ -13,7 +14,6 @@ const gameSteps = [
       { text: "Naahi khelna", nextMsg: "Yaree yaar please khelte hai na... par agar nahi to 'aap busy ho' 😅", nextStep: 0 }
     ]
   },
-  
   // Step 1 - Intro
   {
     message: "Ab mai tumse 2-3 questions poochunga 😉",
@@ -21,7 +21,6 @@ const gameSteps = [
       { text: "Aage badho", nextMsg: "Pehla question: Kya aap mujhe apna best friend maanti hai..?", nextStep: 2 }
     ]
   },
-
   // Step 2 - Question 1
   {
     message: "Kya aap mujhe apna best friend maanti hai..?",
@@ -32,7 +31,6 @@ const gameSteps = [
       { text: "Aajtak nahi", nextMsg: "Mujhe aapse aisi ummid nahi thi 🥲", correct: false, nextStep: 3 }
     ]
   },
-
   // Step 3 - Question 2
   {
     message: "Aaj farewell mai pet bhar kr khana khaya na..?",
@@ -43,17 +41,16 @@ const gameSteps = [
       { text: "Pet fatne tak khaya", nextMsg: "Okey okey 😅", correct: true, nextStep: 4 }
     ]
   },
-
   // Step 4 - Question 3
   {
-    message: "Dopahar mai mujhse baat krne ka mood nahi tha kya..?",
+    message: "Dopahar mai mujhse baat krne ka mood nahi tha kya?",
     options: [
-      { text: "Ha mood tha", nextMsg: "Sach mai 🥲", correct: false, nextStep: 5 },
-      { text: "Thoda mood nahi tha", nextMsg: "Sach mai 🥲", correct: false, nextStep: 5 },
-      { text: "Nahi mood tha", nextMsg: "Aap ka jawab sahi hai 😊", correct: true, nextStep: 5 }
+      { text: "mood nahi tha bolne ka", nextMsg: "Sach mai 🥲", correct: false, nextStep: 5 },
+      { text: "mujhe baat hi nahi karni thi", nextMsg: "Sach mai 🥲", correct: false, nextStep: 5 },
+      { text: "bolne ka mood tha", nextMsg: "Aap ka jawab sahi hai 😊", correct: true, nextStep: 5 },
+      { text: "mai tumhe ignore kr rahi hu", nextMsg: "Sach mai 🥲", correct: false, nextStep: 5 }
     ]
   },
-
   // Step 5 - Result
   {
     message: "Result aayega...",
@@ -63,7 +60,6 @@ const gameSteps = [
   }
 ];
 
-// Function to show steps
 function showStep(stepIndex) {
   optionsBox.innerHTML = '';
   const stepData = gameSteps[stepIndex];
@@ -81,9 +77,15 @@ function showStep(stepIndex) {
         nextBtn.innerText = "Aage badho";
         nextBtn.onclick = () => {
           if(stepIndex === 5){ // final step
-            if(correctCount === 3) messageBox.innerText = "Aap to bahut hoshiyaar ho Radhika ji 😅";
-            else messageBox.innerText = "Better try next time Radhu 😅";
             optionsBox.innerHTML = '';
+            // Result background & message
+            if(correctCount === 3){
+              container.style.backgroundColor = "#d4edda"; // light green
+              messageBox.innerText = "Aap to bahut hoshiyaar ho Radhika ji 😅";
+            } else {
+              container.style.backgroundColor = "#f8d7da"; // light red
+              messageBox.innerText = "Better try next time Radhu 😅";
+            }
           } else {
             showStep(opt.nextStep);
           }
@@ -96,5 +98,5 @@ function showStep(stepIndex) {
   });
 }
 
-// Start the game
+// Start game
 showStep(step);
