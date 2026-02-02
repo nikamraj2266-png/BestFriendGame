@@ -16,11 +16,13 @@ body {
   max-width: 400px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: background 0.5s;
 }
 
 #message-box {
   margin-bottom: 20px;
   font-size: 18px;
+  min-height: 50px;
 }
 
 button {
